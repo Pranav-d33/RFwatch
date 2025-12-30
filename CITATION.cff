@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: RF Inspector
+authors:
+  - family-names: Dhiran
+    given-names: Pranav
+version: 1.0.0
+date-released: 2025-01-01
+license: MIT
