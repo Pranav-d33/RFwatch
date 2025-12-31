@@ -10,6 +10,27 @@ The tool emphasizes physical-layer signal understanding rather than protocol dec
 
 ---
 
+## Screenshots
+
+Below are a few UI screenshots to give a quick feel for the workflow and capabilities.
+
+![Inspector mode (live spectrum + controls)](assets/rfwatch_inspector.png)
+Inspector mode: live spectrum view with controls for tuning and inspecting a single band in real time.
+
+![Signal details (event breakdown)](assets/rfwatch_signaldetails.png)
+Signal details: event-centric view showing the measured characteristics of a detected signal over time.
+
+![Scanner mode (wideband sweep + results)](assets/rfwatch_scanner.png)
+Scanner mode: sweep across a frequency range and summarize activity as detected events.
+
+![Transmit controls in Inspector](/assets/rfwatch_inspector_tx.png)
+Inspector TX: transmit test signals (Noise + Tone) at a chosen frequency for validation and experiments (HackRF required).
+
+![Quick TX from scan results](/assets/rfwatch_tx.png)
+Scan Results TX: quickly transmit at a detected frequency directly from the scan results table.
+
+---
+
 ## Core Philosophy & Vision
 
 RF Inspector is built around a few deliberate principles that guide both its architecture and feature set.
