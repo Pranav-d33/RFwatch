@@ -1,3 +1,11 @@
+# RFwatch Python dependencies
+#
+# System dependencies (install via apt / your package manager first):
+#   sudo apt install gnuradio gr-osmosdr hackrf \
+#     python3-pyside6.qtcore python3-pyside6.qtwidgets \
+#     python3-pyside6.qtgui python3-pyside6.qtopengl
+#
+# Then install Python packages:
 numpy
 PySide6
 PyQt5

@@ -24,7 +24,7 @@ import time
 class MainWindow(QMainWindow):
     def __init__(self, event_store, emitter_store, theme, engine_controller):
         super().__init__()
-        self.setWindowTitle("RF Inspector (v1)")
+        self.setWindowTitle("RFwatch")
         # Compact design for laptops (fits 1080p with room to spare)
         self._design_width = 1100
         self._design_height = 650
