@@ -1,5 +1,8 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """
-Single source of truth for RF Inspector configuration.
+Single source of truth for RFwatch configuration.
 
 All configuration parameters are centralized here.
 UI edits this. Detector reads this. No globals.

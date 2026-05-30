@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """Thread-safe storage for inferred emitters.
 
 Emitters are identity hypotheses built from many closed events.
