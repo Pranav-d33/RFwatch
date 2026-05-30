@@ -1,10 +1,10 @@
-# RF Inspector
+# RFwatch
 
 RF signal detection and analysis system.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-RF Inspector is a desktop application for detecting, analyzing, and visualizing radio-frequency (RF) signals in real time. It is designed to work with Software Defined Radio (SDR) hardware (currently HackRF One) and provides both focused single-band inspection and wideband scanning capabilities.
+RFwatch is a desktop application for detecting, analyzing, and visualizing radio-frequency (RF) signals in real time. It is designed to work with Software Defined Radio (SDR) hardware (currently HackRF One) and provides both focused single-band inspection and wideband scanning capabilities.
 
 The tool emphasizes physical-layer signal understanding rather than protocol decoding or modulation guessing.
 
@@ -33,18 +33,18 @@ Scan Results TX: quickly transmit at a detected frequency directly from the scan
 
 ## Core Philosophy & Vision
 
-RF Inspector is built around a few deliberate principles that guide both its architecture and feature set.
+RFwatch is built around a few deliberate principles that guide both its architecture and feature set.
 
 ### Physical-Layer First
 
-RF Inspector operates strictly at the **physical layer**.  
+RFwatch operates strictly at the **physical layer**.  
 It observes energy, bandwidth, time behavior, and stability — not packets, protocols, or modulation schemes.
 
-If something cannot be supported directly by the RF data and hardware limits, RF Inspector does not guess.
+If something cannot be supported directly by the RF data and hardware limits, RFwatch does not guess.
 
 ### Events, Not Guesswork
 
-Instead of forcing users to interpret raw waterfalls and instantaneous spectra, RF Inspector treats RF activity as **events**:
+Instead of forcing users to interpret raw waterfalls and instantaneous spectra, RFwatch treats RF activity as **events**:
 
 - When a signal appears
 - How long it persists
@@ -55,10 +55,10 @@ This event-centric model allows the system to summarize RF behavior honestly and
 
 ### Honest Constraints
 
-RF Inspector does not attempt to hide or “work around” hardware limitations.
+RFwatch does not attempt to hide or "work around" hardware limitations.
 
 For example:
-- HackRF’s instantaneous bandwidth is respected
+- HackRF's instantaneous bandwidth is respected
 - Wideband monitoring is implemented via time-sliced scanning, not false continuity
 - Power measurements are relative, not calibrated
 
@@ -66,7 +66,7 @@ The goal is **clarity**, not illusion.
 
 ### Deterministic, Explainable Analysis
 
-All analysis in RF Inspector is deterministic and explainable:
+All analysis in RFwatch is deterministic and explainable:
 - No machine learning
 - No black-box classification
 - No protocol inference
@@ -75,7 +75,7 @@ Every displayed value can be traced back to observable RF behavior.
 
 ### Long-Term Vision
 
-RF Inspector aims to become a **reliable RF inspection and monitoring foundation**, suitable for:
+RFwatch aims to become a **reliable RF inspection and monitoring foundation**, suitable for:
 - RF exploration and learning
 - Research and experimentation
 - Security and spectrum monitoring
@@ -100,7 +100,7 @@ Future versions may add deeper analysis layers, but never at the cost of transpa
 ## Project Structure
 
 ```
-rf_inspector/
+rfwatch/
 ├── core/           # Core detection engine (the brain)
 ├── grblocks/       # GNU Radio integration blocks
 ├── ui/             # User interface (PySide6/PyQt)
@@ -167,62 +167,63 @@ The Engine Controller owns modes and execution. UI is just a control panel.
 -   GNU Radio 3.8+ (with Python bindings)
 -   HackRF tools and libraries (`libhackrf`, `gr-osmosdr`)
 
+### System Dependencies (Debian/Ubuntu/Kali)
+
+```bash
+sudo apt install gnuradio gr-osmosdr hackrf \
+  python3-pyside6.qtcore python3-pyside6.qtwidgets \
+  python3-pyside6.qtgui python3-pyside6.qtopengl
+```
+
 ### Setup
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/rf_inspector.git
-    cd rf_inspector
+    git clone https://github.com/thecipher24/RFwatch.git
+    cd RFwatch
     ```
 
-2.  **Create a virtual environment:**
-    ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
-    ```
-
-3.  **Install Python dependencies:**
+2.  **Install Python dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-    *Note: You may need to install `gnuradio` and `osmosdr` via your system package manager (e.g., `apt install gnuradio gr-osmosdr` on Ubuntu/Debian).*
+3.  **Verify HackRF (optional):**
+    ```bash
+    hackrf_info
+    ```
 
 ## Usage
 
 ### GUI (Recommended)
 
-To run the main application:
-
 ```bash
-source .venv/bin/activate
 python -m ui.app
 ```
 
-#### Hardware Control
--   **Force HackRF**: To force real HackRF data (skips safety checks):
-    ```bash
-    export RF_INSPECTOR_FORCE_HACKRF=1
-    python -m ui.app
-    ```
+#### Environment Variables
+
+| Variable | Purpose |
+|---|---|
+| `RFWATCH_FORCE_HACKRF=1` | Skip HackRF safety checks (use if you're sure the hardware is connected) |
+| `RFWATCH_HACKRF_ARGS` | Override HackRF source arguments (default: `numchan=1 hackrf=0`) |
+| `RFWATCH_HACKRF_BIAS_T=1` | Enable HackRF bias tee (antenna power) |
+| `RFWATCH_DEBUG=1` | Enable debug logging |
+| `RFWATCH_DEBUG_DETECTOR=1` | Enable detector debug output |
+| `RFWATCH_UI_PSD_INTERVAL_S=0.1` | PSD snapshot interval (seconds) |
 
 #### Transmission Features
-The application includes transmission capabilities for testing and signal generation.
 1.  **Enable Transmission**: Go to Settings (gear icon) and check "Enable Transmission".
-2.  **Manual Transmission**: Use the "TX" controls in Inspector or Scanner mode to set a frequency and transmit a test signal (Noise + Tone).
-3.  **Quick Action**: In the Scan Results table, use the "TX" button to quickly transmit on a detected frequency.
+2.  **Manual Transmission**: Use the "TX" controls in Inspector or Scanner mode.
+3.  **Quick Action**: In the Scan Results table, use the "TX" button.
 
 ### CLI
 
-To run the command-line interface for headless detection:
-
 ```bash
-python cli/run.py --duration 10 --sample-rate 2e6 --threshold 6.0
+python cli/run.py --duration 10 --freq 100e6 --sample-rate 2e6 --gain 40
 ```
 
 ## Testing
-
-Run the test suite to verify installation:
 
 ```bash
 python -m pytest tests/ -v
@@ -230,19 +231,18 @@ python -m pytest tests/ -v
 
 ## Troubleshooting
 
--   **HackRF not found**: Ensure your user has permission to access USB devices. You might need to install udev rules for HackRF.
+-   **HackRF not found**: Ensure your user has permission to access USB devices.
     ```bash
     sudo apt install hackrf
+    lsusb | grep HackRF
     ```
--   **GNU Radio Import Errors**: Ensure that the Python environment can see the system GNU Radio packages. Sometimes it's easier to use the system Python or link the site-packages.
+-   **GNU Radio Import Errors**: Install system packages (`gnuradio`, `gr-osmosdr`). Do not use pip for these.
 
 ## Project Status
 
-RF Inspector is currently in **early-stage development (v1)**.
+RFwatch is currently in **early-stage development**.
 
-The core architecture and feature set are stable, but the project is expected to evolve as new capabilities and refinements are added. The current release focuses on correctness, transparency, and physical-layer accuracy rather than breadth of features. Designed for correctness over completeness.
-
-Contributions welcome. Feedback encouraged.
+The core architecture and feature set are stable, but the project is expected to evolve as new capabilities and refinements are added. The current release focuses on correctness, transparency, and physical-layer accuracy rather than breadth of features.
 
 ## License
 
@@ -250,7 +250,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-RF Inspector is created and maintained by **Pranav Dhiran**.
+RFwatch is created and maintained by **Pranav Dhiran**.
 
 This project originated as an effort to build an honest, event-centric RF inspection tool that respects physical-layer constraints and avoids protocol-level guessing.
-

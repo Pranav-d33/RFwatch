@@ -44,9 +44,9 @@ from .emitter_tracker import EmitterTracker, EmitterTrackerConfig
 
 # Optional environment toggles for HackRF / GNU Radio integration.
 
-# When RF_INSPECTOR_FORCE_HACKRF is set, we skip the subprocess safety
+# When RFWATCH_FORCE_HACKRF is set, we skip the subprocess safety
 # probe and assume HackRF is safe to use, as long as GNU Radio is present.
-_HACKRF_FORCED = os.getenv("RF_INSPECTOR_FORCE_HACKRF", "").lower() in {
+_HACKRF_FORCED = os.getenv("RFWATCH_FORCE_HACKRF", "").lower() in {
     "1",
     "true",
     "yes",
@@ -181,7 +181,7 @@ class EngineController(QObject):
 
         # UI publishing throttles
         self._last_psd_publish_ts = 0.0
-        self._ui_psd_min_interval_s = float(os.getenv("RF_INSPECTOR_UI_PSD_INTERVAL_S", "0.1"))
+        self._ui_psd_min_interval_s = float(os.getenv("RFWATCH_UI_PSD_INTERVAL_S", "0.1"))
 
         # Detector holdover (reduces event churn on brief flicker)
         self._last_present_ts = 0.0
@@ -221,7 +221,7 @@ class EngineController(QObject):
         """
         # If user forces HackRF usage, skip the safety subprocess.
         if _HACKRF_FORCED:
-            print("[CONTROLLER] HackRF forced via RF_INSPECTOR_FORCE_HACKRF; skipping safety test")
+            print("[CONTROLLER] HackRF forced via RFWATCH_FORCE_HACKRF; skipping safety test")
             self._hackrf_verified = True
             return True
 
@@ -251,7 +251,6 @@ except Exception as e:
                 capture_output=True,
                 timeout=10.0,
                 text=True,
-                cwd="/home/prannav/Projects/rf_inspector"
             )
             
             if result.returncode == 0 and "OK" in result.stdout:
@@ -324,8 +323,6 @@ except Exception as e:
         
         Args:
             config: InspectorConfig with frequency/sample_rate/gain
-            use_replay: Use replay source instead of HackRF
-            replay_file: Path to replay file (required if use_replay=True)
         """
         current_state = self.get_state()
         if current_state != ControllerState.IDLE:
@@ -663,7 +660,7 @@ except Exception as e:
         Each complete sweep is one "iteration" of the loop.
         """
         print("[ENGINE] Scanner loop started (continuous mode)")
-        print(f"[ENGINE] Data source: {'HackRF' if self.use_hackrf else 'Replay' if self.use_replay else 'Unknown'}")
+        print(f"[ENGINE] Data source: {'HackRF' if self.use_hackrf else 'Unknown'}")
         print(f"[ENGINE] Scan range: {config.start_freq/1e6:.2f} - {config.stop_freq/1e6:.2f} MHz")
         print(f"[ENGINE] Step size: {config.step/1e6:.2f} MHz")
         iteration = 1

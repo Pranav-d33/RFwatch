@@ -12,7 +12,7 @@ from pathlib import Path
 def _get_settings_path() -> Path:
     """Get the path to the settings file."""
     home = Path.home()
-    config_dir = home / ".rf_inspector"
+    config_dir = home / ".rfwatch"
     config_dir.mkdir(exist_ok=True, parents=True)
     return config_dir / "settings.json"
 

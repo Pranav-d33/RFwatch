@@ -6,7 +6,7 @@ import logging
 import sys
 
 
-def setup_logging(level=logging.INFO, name="rf_inspector"):
+def setup_logging(level=logging.INFO, name="rfwatch"):
     """
     Set up basic logging configuration.
 

@@ -102,7 +102,7 @@ class Detector:
         old_state = self.state
         
         # Debug: Sample every 100 chunks
-        if self.chunk_count % 100 == 0 and os.getenv("RF_INSPECTOR_DEBUG_DETECTOR", "").lower() in {"1", "true"}:
+        if self.chunk_count % 100 == 0 and os.getenv("RFWATCH_DEBUG_DETECTOR", "").lower() in {"1", "true"}:
             print(f"[DETECTOR] chunk={self.chunk_count}: power={power_db:.1f}dB, noise={noise_floor_db:.1f}dB, snr={snr_db:.1f}dB, threshold={self.config.snr_enter_db}dB")
 
         if self.state == "IDLE":
