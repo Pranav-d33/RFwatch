@@ -1,4 +1,7 @@
-"""Settings persistence for RF Inspector UI.
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
+"""Settings persistence for RFwatch UI.
 
 Stores user preferences for waterfall visualization and other UI settings
 in a JSON file in the user's home directory.

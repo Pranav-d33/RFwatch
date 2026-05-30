@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 import sys
 from PySide6.QtWidgets import QApplication
 

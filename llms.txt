@@ -1,0 +1,33 @@
+# RFwatch — LLM Discovery File
+
+RFwatch is a desktop application for detecting, analyzing, and visualizing radio-frequency (RF) signals using HackRF One SDR hardware and GNU Radio.
+
+## Core Documents
+- README.md: Full project overview, install, usage
+- CLAUDE.md: LLM agent instructions (architecture, rules, env vars)
+- ARCHITECTURE.md: Detailed architecture and data flow
+- CONTRIBUTING.md: Development setup and contribution guide
+
+## Quick Install
+```
+sudo apt install gnuradio gr-osmosdr hackrf \
+  python3-pyside6.qtcore python3-pyside6.qtwidgets \
+  python3-pyside6.qtgui python3-pyside6.qtopengl
+pip install numpy PySide6 PyQt5 pyqtgraph
+python -m ui.app
+```
+
+## Key Source Files
+- core/detector.py: Binary signal presence detection with hysteresis
+- core/segmenter.py: FFT-based frequency segmentation
+- core/emitter_tracker.py: Deterministic emitter identity inference
+- core/engine_controller.py: State machine and mode lifecycle
+- grblocks/flowgraph.py: GNU Radio HackRF flowgraph builder
+- ui/main_window.py: PySide6 main window with all controls
+
+## Entry Points
+- python -m ui.app # GUI
+- python cli/run.py # Headless CLI
+
+## License
+MIT — see LICENSE

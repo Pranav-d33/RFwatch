@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """
 Transmission Thread - Handles RF transmission using GNU Radio.
 """

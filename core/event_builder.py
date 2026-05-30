@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """
 Event construction and time aggregation.
 

@@ -1,7 +1,10 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """
 Defines Signal Event object.
 
-The SignalEvent is the currency of the RF Inspector system.
+The SignalEvent is the currency of the RFwatch system.
 It represents a detected RF signal with all associated metadata.
 """
 

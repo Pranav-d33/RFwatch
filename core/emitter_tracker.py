@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Pranav Dhiran
+
 """Emitter tracking (identity inference) over closed events.
 
 This implements a deterministic, explainable tracking layer:
