@@ -68,7 +68,7 @@ class EventBuilder:
                 'closed': List of newly closed events (this iteration only)
         """
 
-        if os.getenv("RF_INSPECTOR_DEBUG", "").lower() in {"1", "true", "yes", "on"}:
+        if os.getenv("RFWATCH_DEBUG", "").lower() in {"1", "true", "yes", "on"}:
             print(
                 f"[EVENT_BUILDER] detected={detected} "
                 f"segments={len(segments)} "

@@ -150,8 +150,8 @@ def build_flowgraph(config, iq_stream):
         # HackRF source args.
         # IMPORTANT: do NOT enable bias-tee by default; some clone devices
         # segfault or misbehave when bias_t is set.
-        hackrf_args = os.getenv("RF_INSPECTOR_HACKRF_ARGS", "numchan=1 hackrf=0")
-        if os.getenv("RF_INSPECTOR_HACKRF_BIAS_T", "").lower() in {"1", "true", "yes", "on"}:
+        hackrf_args = os.getenv("RFWATCH_HACKRF_ARGS", "numchan=1 hackrf=0")
+        if os.getenv("RFWATCH_HACKRF_BIAS_T", "").lower() in {"1", "true", "yes", "on"}:
             if "bias_t=" not in hackrf_args:
                 hackrf_args = hackrf_args + ",bias_t=1"
 
